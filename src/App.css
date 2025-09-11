@@ -66,18 +66,36 @@ body {
 }
 
 .sidebar-nav li a {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 15px;
   padding: 15px 20px;
   text-decoration: none;
   color: var(--secondary-text);
-  transition: background-color 0.3s, color 0.3s;
+  transition: all 0.3s ease;
   white-space: nowrap;
+  border-radius: 8px;
+  margin: 0 10px;
+  position: relative;
 }
 
 .sidebar-nav li:hover a,
 .sidebar-nav li.active a {
   background-color: var(--active-bg);
   color: var(--primary-text);
+}
+
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-text {
+  transition: opacity 0.3s ease;
 }
 
 /* Main Content */
@@ -87,10 +105,12 @@ body {
   flex-direction: column;
   overflow-y: auto;
   transition: margin-left 0.3s ease;
+  background-color: var(--primary-bg);
 }
 
 .page-content {
     padding: 20px 20px 60px 20px;
+    background-color: var(--primary-bg);
 }
 
 .main-header {
@@ -120,7 +140,7 @@ body {
   --sidebar-bg: #f0f0f0;
   --card-bg: #ffffff;
   --primary-text: #1a1a1a;
-  --secondary-text: #555555;
+  --secondary-text: #666666;
   --accent-color: #007bff;
   --border-color: #dddddd;
   --active-bg: rgba(0, 123, 255, 0.1);
@@ -209,7 +229,33 @@ body {
 
 /* Collapsed Sidebar Styles */
 .sidebar-closed .sidebar {
-  width: 0;
+  width: 70px !important;
+}
+
+.sidebar-closed .sidebar-header h2,
+.sidebar-closed .nav-text {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+.sidebar-closed .sidebar-nav li a {
+  justify-content: center !important;
+  padding: 12px 0 !important;
+  margin: 0 5px !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 0 !important;
+  width: 60px !important;
+  height: 50px !important;
+  box-sizing: border-box !important;
+}
+
+.sidebar-closed .nav-icon {
+  margin: 0 auto !important;
+  width: 24px !important;
+  height: 24px !important;
+  flex-shrink: 0 !important;
 }
 
 /* Content Cards */
@@ -250,6 +296,13 @@ body {
   font-size: 2em;
   font-weight: 700;
   color: var(--primary-text);
+}
+
+.card-icon {
+  font-size: 20px;
+  color: var(--accent-color);
+  width: 20px;
+  height: 20px;
 }
 
 /* Content Widgets */

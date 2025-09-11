@@ -1,6 +1,13 @@
 import React, { useState, ReactNode } from 'react';
 import './App.css';
-import { FaHome, FaChartBar, FaFileAlt, FaCog, FaSun, FaMoon } from 'react-icons/fa';
+import { 
+  HomeIcon, 
+  AnalyticsIcon, 
+  ReportsIcon, 
+  SettingsIcon, 
+  SunIcon, 
+  MoonIcon 
+} from './components/AnimatedIcons';
 
 
 // Page Components
@@ -12,10 +19,10 @@ import PlaceholderPage from './pages/PlaceholderPage';
 type Page = 'Home' | 'Analytics' | 'Reports' | 'Settings';
 
 const pageIcons: { [key in Page]: React.ElementType } = {
-  Home: FaHome,
-  Analytics: FaChartBar,
-  Reports: FaFileAlt,
-  Settings: FaCog,
+  Home: HomeIcon,
+  Analytics: AnalyticsIcon,
+  Reports: ReportsIcon,
+  Settings: SettingsIcon,
 };
 
 function App() {
@@ -48,12 +55,12 @@ function App() {
         <nav className="sidebar-nav">
           <ul>
             {(Object.keys(pageIcons) as Page[]).map((page) => {
-              const Icon = pageIcons[page];
+              const IconComponent = pageIcons[page];
               return (
                 <li key={page} className={activePage === page ? 'active' : ''} onClick={() => setActivePage(page)}>
                   <a href="#">
-                    <Icon className="nav-icon" />
-                    <span>{page}</span>
+                    <IconComponent className="nav-icon" />
+                    <span className="nav-text">{page}</span>
                   </a>
                 </li>
               );
@@ -69,7 +76,7 @@ function App() {
           <h1>{activePage}</h1>
           <div className="header-profile">
             <button className="theme-toggle-button" onClick={toggleTheme}>
-              {theme === 'dark' ? <FaSun /> : <FaMoon />}
+              {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
             </button>
             <span className="admin-name">Admin</span>
             <div className="avatar-menu">

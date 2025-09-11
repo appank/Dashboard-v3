@@ -1,6 +1,6 @@
 import React from 'react';
-import { FaDollarSign, FaUsers, FaChartLine, FaPercentage } from 'react-icons/fa';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { DollarIcon, UsersIcon, TrendingUpIcon, PercentIcon } from '../components/AnimatedIcons';
 
 const dataOverviewData = [
     { name: 'Mon', value: 220 },
@@ -18,28 +18,28 @@ const HomePage = () => (
       <div className="card">
         <div className="card-header">
           <h3>Sales</h3>
-          <FaDollarSign className="card-icon" />
+          <DollarIcon className="card-icon" />
         </div>
         <p>$15,024</p>
       </div>
       <div className="card">
         <div className="card-header">
           <h3>Users</h3>
-          <FaUsers className="card-icon" />
+          <UsersIcon className="card-icon" />
         </div>
         <p>1,204</p>
       </div>
       <div className="card">
         <div className="card-header">
           <h3>Performance</h3>
-            <FaChartLine className="card-icon" />
+          <TrendingUpIcon className="card-icon" />
         </div>
         <p>+12%</p>
       </div>
         <div className="card">
         <div className="card-header">
           <h3>Conversion</h3>
-          <FaPercentage className="card-icon" />
+          <PercentIcon className="card-icon" />
         </div>
         <p>5.7%</p>
       </div>
