@@ -1,4 +1,4 @@
-import React, { useState, ReactNode } from 'react';
+import React, { useState, ReactNode, useEffect } from 'react';
 import './App.css';
 import { 
   HomeIcon, 
@@ -15,6 +15,7 @@ import HomePage from './pages/HomePage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import SettingsPage from './pages/SettingsPage';
 import PlaceholderPage from './pages/PlaceholderPage';
+import LoginPage from './pages/LoginPage';
 
 type Page = 'Home' | 'Analytics' | 'Reports' | 'Settings';
 
@@ -26,13 +27,25 @@ const pageIcons: { [key in Page]: React.ElementType } = {
 };
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [activePage, setActivePage] = useState<Page>('Home');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState(() => {
+    const savedTheme = localStorage.getItem('theme');
+    return savedTheme || 'dark';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('theme', theme);
+  }, [theme]);
 
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
   };
 
   const renderContent = (): ReactNode => {
@@ -45,12 +58,16 @@ function App() {
     }
   };
 
+  if (!isLoggedIn) {
+    return <LoginPage handleLogin={handleLogin} />;
+  }
+
   return (
     <div 
-      className={`dashboard-container ${isSidebarOpen ? '' : 'sidebar-closed'}`}
+      className={`dashboard-container`}
       data-theme={theme}
     >
-      <aside className="sidebar">
+      <aside className={`sidebar ${isSidebarOpen ? '' : 'sidebar-closed'}`}>
         <div className="sidebar-header"><h2>Dashboard</h2></div>
         <nav className="sidebar-nav">
           <ul>
@@ -58,7 +75,7 @@ function App() {
               const IconComponent = pageIcons[page];
               return (
                 <li key={page} className={activePage === page ? 'active' : ''} onClick={() => setActivePage(page)}>
-                  <a href="#">
+                  <a href="/#">
                     <IconComponent className="nav-icon" />
                     <span className="nav-text">{page}</span>
                   </a>
@@ -68,7 +85,7 @@ function App() {
           </ul>
         </nav>
       </aside>
-      <main className="main-content">
+      <main className={`main-content ${isSidebarOpen ? '' : 'sidebar-closed'}`}>
         <header className="main-header">
           <button className="sidebar-toggle" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
             &#9776;
@@ -85,8 +102,8 @@ function App() {
                 </button>
                 {isDropdownOpen && (
                 <div className="dropdown-menu">
-                    <a href="#">About</a>
-                    <a href="#">Logout</a>
+                    <a href="/#">About</a>
+                    <a href="/#">Logout</a>
                 </div>
                 )}
             </div>
