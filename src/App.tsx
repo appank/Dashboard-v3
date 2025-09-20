@@ -59,21 +59,6 @@ function App() {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
-  // Close mobile menu when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (isMobileMenuOpen && isMobile) {
-        const target = event.target as Element;
-        if (!target.closest('.sidebar') && !target.closest('.mobile-menu-toggle')) {
-          setIsMobileMenuOpen(false);
-        }
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [isMobileMenuOpen, isMobile]);
-
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
   };
@@ -97,6 +82,35 @@ function App() {
     }
   };
 
+  const renderSidebarContent = () => (
+    <>
+      <div className="sidebar-header">
+        <h2>Dashboard</h2>
+      </div>
+      <div className="sidebar-nav">
+        <ul>
+          {(Object.keys(pageIcons) as Page[]).map((page) => {
+            const Icon = pageIcons[page];
+            return (
+              <li 
+                key={page} 
+                className={activePage === page ? 'active' : ''}
+                onClick={() => handleMenuClick(page)}
+              >
+                <a>
+                  <div className="nav-icon">
+                    <Icon />
+                  </div>
+                  <span className="nav-text">{page}</span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </>
+  );
+
   const renderContent = (): ReactNode => {
     switch (activePage) {
       case 'Home': return <HomePage />;
@@ -116,98 +130,16 @@ function App() {
       className={`dashboard-container ${!isSidebarOpen && !isMobile ? 'sidebar-closed' : ''} ${isMobile ? 'mobile-view' : ''}`}
       data-theme={theme}
     >
-      {/* Mobile Backdrop */}
-      {isMobile && isMobileMenuOpen && (
-        <div 
-          className="mobile-backdrop" 
-          onClick={() => setIsMobileMenuOpen(false)}
-        />
+      {/* Sidebar - Use MobileDrawer for mobile, regular nav for desktop */}
+      {isMobile ? (
+        <MobileDrawer isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)}>
+          {renderSidebarContent()}
+        </MobileDrawer>
+      ) : (
+        <nav className={`sidebar ${!isSidebarOpen ? 'sidebar-closed' : ''}`}>
+          {renderSidebarContent()}
+        </nav>
       )}
-
-      {/* Sidebar */}
-       <nav className={`sidebar ${isMobile && isMobileMenuOpen ? 'mobile-open' : ''}`}>
-        <div className="sidebar-header">
-          <h2>Dashboard</h2>
-        </div>
-        <div className="sidebar-nav">
-          <ul>
-            {(Object.keys(pageIcons) as Page[]).map((page) => {
-              const Icon = pageIcons[page];
-              return (
-                <li 
-                  key={page} 
-                  className={activePage === page ? 'active' : ''}
-                  onClick={() => handleMenuClick(page)}
-                >
-                  <a>
-                    <div className="nav-icon">
-                      <Icon />
-                    </div>
-                    <span className="nav-text">{page}</span>
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </nav> 
-      {/* Sidebar
-{isMobile ? (
-  <MobileDrawer isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)}>
-    <div className="sidebar-header">
-      <h2>Dashboard</h2>
-    </div>
-    <div className="sidebar-nav">
-      <ul>
-        {(Object.keys(pageIcons) as Page[]).map((page) => {
-          const Icon = pageIcons[page];
-          return (
-            <li 
-              key={page} 
-              className={activePage === page ? 'active' : ''}
-              onClick={() => handleMenuClick(page)}
-            >
-              <a>
-                <div className="nav-icon">
-                  <Icon />
-                </div>
-                <span className="nav-text">{page}</span>
-              </a>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  </MobileDrawer>
-) : (
-  <nav className={`sidebar ${!isSidebarOpen ? 'sidebar-closed' : ''}`}>
-    <div className="sidebar-header">
-      <h2>Dashboard</h2>
-    </div>
-    <div className="sidebar-nav">
-      <ul>
-        {(Object.keys(pageIcons) as Page[]).map((page) => {
-          const Icon = pageIcons[page];
-          return (
-            <li 
-              key={page} 
-              className={activePage === page ? 'active' : ''}
-              onClick={() => handleMenuClick(page)}
-            >
-              <a>
-                <div className="nav-icon">
-                  <Icon />
-                </div>
-                <span className="nav-text">{page}</span>
-              </a>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  </nav>
-)} */}
-
 
       {/* Main Content */}
       <main className="main-content">
