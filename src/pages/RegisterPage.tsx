@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import LoginForm from '../components/LoginForm';
+import RegisterForm from '../components/RegisterForm';
 
-const LoginPageContainer = styled.div`
+const RegisterPageContainer = styled.div`
   display: flex;
   height: 100vh;
   width: 100%;
@@ -33,19 +33,17 @@ const FormSection = styled.div`
   }
 `;
 
-
-
-const LoginPage = ({ handleLogin, switchToRegister }: { handleLogin: () => void; switchToRegister?: () => void }) => {
+const RegisterPage = ({ handleRegister, switchToLogin }: { handleRegister: () => void; switchToLogin?: () => void }) => {
   return (
-    <LoginPageContainer>
+    <RegisterPageContainer>
       <ImageSection>
-        <img src="https://via.placeholder.com/800x800" alt="Login Visual" style={{width: '100%', height: '100%', objectFit: 'cover'}}/>
+        <img src="https://via.placeholder.com/800x800" alt="Register Visual" style={{width: '100%', height: '100%', objectFit: 'cover'}}/>
       </ImageSection>
       <FormSection>
-        <LoginForm handleLogin={handleLogin} switchToRegister={switchToRegister} />
+        <RegisterForm handleRegister={handleRegister} switchToLogin={switchToLogin} />
       </FormSection>
-    </LoginPageContainer>
+    </RegisterPageContainer>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
