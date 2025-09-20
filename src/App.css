@@ -397,7 +397,8 @@ body {
 
 .form-group label {
     font-weight: bold;
-    color: var(--secondary-text);
+    color: var(--primary-text);
+    font-size: 0.9rem;
 }
 
 .form-group input {
@@ -409,15 +410,60 @@ body {
     font-size: 1em;
 }
 
+/* Checkbox and Radio Button Styles */
 .form-group-checkbox, .form-group-radio {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-top: 10px;
+    padding: 8px 0;
 }
 
 .form-group-checkbox label, .form-group-radio label {
     cursor: pointer;
+    color: var(--primary-text) !important;
+    font-weight: 500;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    user-select: none;
+    transition: color 0.2s ease;
+}
+
+.form-group-checkbox input[type="checkbox"], 
+.form-group-radio input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    cursor: pointer;
+    accent-color: var(--accent-color);
+}
+
+/* Enhanced checkbox styling */
+.form-group-checkbox input[type="checkbox"] {
+    border-radius: 4px;
+}
+
+.form-group-radio input[type="radio"] {
+    border-radius: 50%;
+}
+
+/* Hover effects for better UX */
+.form-group-checkbox:hover label,
+.form-group-radio:hover label {
+    color: var(--accent-color) !important;
+}
+
+.form-group-checkbox:hover input[type="checkbox"],
+.form-group-radio:hover input[type="radio"] {
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+}
+
+/* Focus styles for accessibility */
+.form-group-checkbox input[type="checkbox"]:focus,
+.form-group-radio input[type="radio"]:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
 }
 
 .form-actions {
@@ -437,7 +483,25 @@ body {
 }
 
 .save-btn:hover {
-    background-color: #0056b3;
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+/* Light mode specific overrides for better contrast */
+[data-theme='light'] .form-group-checkbox label,
+[data-theme='light'] .form-group-radio label {
+    color: #2c3e50 !important;
+    font-weight: 600;
+}
+
+[data-theme='light'] .form-group-checkbox:hover label,
+[data-theme='light'] .form-group-radio:hover label {
+    color: var(--accent-color) !important;
+}
+
+[data-theme='light'] .form-group label {
+    color: #2c3e50 !important;
+    font-weight: 600;
 }
 
 /* Recharts custom styles */
@@ -578,6 +642,15 @@ body {
 
   .widget {
     padding: 15px;
+  }
+
+  /* Settings form mobile adjustments */
+  .form-group-checkbox, .form-group-radio {
+    padding: 12px 0;
+  }
+
+  .form-group-checkbox label, .form-group-radio label {
+    font-size: 1rem;
   }
 
   /* Table adjustments */
